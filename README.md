@@ -1,2 +1,2 @@
-# TodoReactRedux
-This is a todo list, with react react, styled components and redux
+# TodoTypeScriptRedux
+This is a todo list, with typescript, styled components and redux
