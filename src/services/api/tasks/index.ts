@@ -1,41 +1,47 @@
 import { rootApi } from "..";
-import { Task } from "./type";
+import { task } from "./type";
 
 export const TaskApi = rootApi.injectEndpoints({
     endpoints : (builder) => ({
-        getAllTasks: builder.query<Task[],void>({
+        getAllTasks: builder.query<task[],void>({
             query: () => `/tasks`,
+            providesTags: [{ type: "TASKS", id: "LIST" }]
         }),
 
-        getTaskById: builder.query<Task,number>({
-            query: (id: number) => `/tasks/${id}`,
+        getTaskById: builder.query<task,string>({
+            query: (id: string) => `/tasks/${id}`,
+            providesTags: (_result, _error, id) => [{ type: "TASKS", id: "LIST"  }],
         }),
 
-        saveTask: builder.mutation<Task,Task>({
-            query: (body: Task) => ({
+        saveTask: builder.mutation<task,task>({
+            query: (body: task) => ({
                 url: `tasks`,
                 method: "POST",
                 body
-            })
+            }),
+            invalidatesTags: (_result, _error, { id }) => [{ type: "TASKS", id: "LIST" }],
         }),
 
-        updateTask: builder.mutation<Task,Task>({
-            query: (body: Task) => ({
+        updateTask: builder.mutation<task,task>({
+            query: (body: task) => ({
                 url: `tasks/${body.id}`,
                 method: "PUT",
                 body
-            })
+            }),
+            invalidatesTags: (_result, _error, { id }) => [{ type: "TASKS", id: "LIST"  }],
         }),
 
-        deleteTask: builder.mutation<void,number>({
-            query: (id: number) => ({
+        deleteTask: builder.mutation<void,string>({
+            query: (id: string) => ({
                 url: `tasks/${id}`,
                 method: "DELETE",
-            })
+            }),
+            invalidatesTags: (_result, _error, id) => [{ type: "TASKS", id: "LIST" }],
         })
         
-    })
-})
+    }),
+    overrideExisting: false,
+});
 
 
 export const {

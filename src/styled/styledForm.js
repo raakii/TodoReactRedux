@@ -9,10 +9,12 @@ export const StyledInput = styled.input`
     color: palevioletred;
     font-size: 1em;
     border: 2px solid palevioletred;
-    width: 400px;
+    width: 500px;
     border-radius: 3px;
     margin: 5px;
-    padding: 10px;
+    padding: auto;
+    display: flex;
+    margin: auto;
     
   
     /* here we use the dynamically computed prop */
